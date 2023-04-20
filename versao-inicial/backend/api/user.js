@@ -1,5 +1,11 @@
 const bcrypt = require('bcrypt')
 
+/**
+ * 
+ * @param { import("knex").Knex } app.db
+ * @returns 
+ */
+
 module.exports = app => {
     const {equalsOrError, existsOrError, notExistsOrError} = app.api.validation
     
@@ -17,7 +23,7 @@ module.exports = app => {
             existsOrError(user.password,'Senha não informada')
             existsOrError(user.confirmPassword,'Confirmação de Senha inválida')
             equalsOrError(user.password, user.confirmPassword,'Senhas não conferem')
-
+            
             const userFromDB = await app.db('users')
                 .where({email: user.email}).first()
 
