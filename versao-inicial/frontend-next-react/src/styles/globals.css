@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "Lato", sans-serif;
+}
+
+.app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 60px 1fr 40px;
+  grid-template-columns: 300px 1fr;
+}
+
+.grid-template-com-menu {
+  grid-template-areas:
+    "header header"
+    "menu content"
+    "menu footer";
+}
+
+.grid-template-sem-menu {
+  grid-template-areas:
+    "header header"
+    "content content"
+    "footer footer";
+}
