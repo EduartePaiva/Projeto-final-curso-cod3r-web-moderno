@@ -12,7 +12,20 @@ async function getStats(): Promise<statInterface> {
 }
 
 export default async function Home() {
-    const statDados = await getStats()
+    let statDados: statInterface = {
+        articles: 0, categories: 0, users: 0
+    }
+
+    try {
+        statDados = await getStats()
+    } catch (err) {
+        console.log('deu erro ' + err)
+    }
+
+
+
+
+
     return (
         <div className="home">
             <PageTitle main="Dashboard" icon={faHome} sub="Base de Conhecimento"></PageTitle>

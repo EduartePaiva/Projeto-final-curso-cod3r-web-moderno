@@ -5,6 +5,9 @@ import HomePage from './home/page'
 export default function Page() {
 
     return (
-        <HomePage />
+        <>
+            {/* @ts-expect-error Async Server Component */}
+            < HomePage />
+        </>
     )
 }
