@@ -12,12 +12,12 @@
     font-weight: 100;
     flex-grow: 1;
     text-align: center;
+    user-select: none;
 }
 
 .title a {
     color: #fff;
     text-decoration: none;
-
 }
 
 header.header>a.toggle {
