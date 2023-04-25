@@ -4,9 +4,18 @@ import { baseApiUrl } from "@/global";
 import statInterface from "@/interfaces/statInterface";
 import style from './page.module.css'
 import Stat from "./component.Stat";
+import token from '../tokenTemporario'
 
 async function getStats(): Promise<statInterface> {
-    const stat = await fetch(`${baseApiUrl}/stats`)
+    const myHeaders = new Headers()
+    myHeaders.append('Authorization', 'bearer ' + token)
+    const stat = await fetch(`${baseApiUrl}/stats`, {
+        method: 'GET',
+        headers: myHeaders,
+        next: { revalidate: 60 }
+    })
+
+
     const result: statInterface = await stat.json()
     return result
 }
