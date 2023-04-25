@@ -2,6 +2,14 @@
 
 import '@/styles/globals.css'
 import style from '@/styles/Content.module.css'
+// The following import prevents a Font Awesome icon server-side rendering bug,
+// where the icons flash from a very large icon down to a properly sized one:
+import '@fortawesome/fontawesome-svg-core/styles.css';
+// Prevent fontawesome from adding its CSS since we did it manually above:
+import { config } from '@fortawesome/fontawesome-svg-core';
+config.autoAddCss = false; /* eslint-disable import/first */
+import { useState } from 'react'
+import Script from 'next/script'
 
 import Header from './component.Header'
 import Menu from './component.Menu'
@@ -9,8 +17,7 @@ import Footer from './component.Footer'
 
 import userInterface from '@/interfaces/userInterface'
 
-import { useState } from 'react'
-import Script from 'next/script'
+
 
 
 export const metadata = {
@@ -42,7 +49,8 @@ export default function RootLayout({
             <head>
                 <title>Base De Conhecimento</title>
                 {/* Fonte Lato da google */}
-                <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' />
+                {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+                <link href='https://fonts.googleapis.com/css?family=Lato&display=optional' rel='stylesheet' />
                 {/* Bootstrap css versão 5.3-alpha3 */}
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossOrigin="anonymous"></link>
             </head>

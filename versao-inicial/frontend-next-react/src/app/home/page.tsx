@@ -12,28 +12,23 @@ async function getStats(): Promise<statInterface> {
     const stat = await fetch(`${baseApiUrl}/stats`, {
         method: 'GET',
         headers: myHeaders,
-        next: { revalidate: 60 }
+        next: { revalidate: 60 },
     })
-
 
     const result: statInterface = await stat.json()
     return result
 }
+let statDados: statInterface = {
+    articles: 0, categories: 0, users: 0
+}
 
 export default async function Home() {
-    let statDados: statInterface = {
-        articles: 0, categories: 0, users: 0
-    }
 
     try {
         statDados = await getStats()
     } catch (err) {
         console.log('deu erro ' + err)
     }
-
-
-
-
 
     return (
         <div className="home">
