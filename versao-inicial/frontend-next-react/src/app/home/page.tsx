@@ -1,6 +1,6 @@
 import PageTitle from "../admin/PageTitle";
 import { faFile, faFolder, faHome, faUser } from '@fortawesome/free-solid-svg-icons'
-import { baseApiUrl } from "@/global";
+import { baseApiUrl } from "@/app/global";
 import statInterface from "@/interfaces/statInterface";
 import style from './page.module.css'
 import Stat from "./component.Stat";

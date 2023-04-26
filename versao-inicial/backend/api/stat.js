@@ -6,7 +6,7 @@ module.exports = app => {
         createdAt: Date
     })
     const get = (req, res) => {
-        console.log('request: get stat completa')
+        console.log('Request: GET (success) stat')
         Stat.findOne({}, {}, { sort: { 'createdAt': -1 } })
             .then(stat => {
                 const defaultStat = {

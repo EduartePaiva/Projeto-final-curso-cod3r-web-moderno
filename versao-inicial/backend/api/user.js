@@ -58,7 +58,10 @@ module.exports = (app) => {
         app.db("users")
             .select("id", "name", "email", "admin")
             .whereNull('deletedAt')
-            .then((users) => res.json(users))
+            .then((users) => {
+                console.log('Request: GET (success) users')
+                res.json(users)
+            })
             .catch((err) => res.status(500).send(err))
     }
 

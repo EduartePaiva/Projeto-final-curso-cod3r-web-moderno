@@ -1,11 +1,15 @@
-import PageTitle from "./PageTitle";
-import { faCogs } from '@fortawesome/free-solid-svg-icons'
-
+import Link from "next/link";
+import style from './adminPageTabs.module.scss'
+import NavLinks from "./NavLinks";
 
 export default function AdminPages() {
     return (
-        <div className="admin-pages">
-            <PageTitle main="Administração do Sistema" sub="Cadastros & Cia" icon={faCogs}></PageTitle>
-        </div>
+        <div className={style['nav-tab']}>
+            <NavLinks navAtiva=""></NavLinks>
+
+            <div className={`${style['tab-content']} p-3 bg-white category-admin`}>
+                <h1>Escolha uma opção</h1>
+            </div>
+        </div >
     )
 }

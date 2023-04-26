@@ -1,0 +1,25 @@
+$bs-border-color: #dee2e6;
+$bd-example-padding: 1.5rem;
+$bs-border-radius: 0.375rem;
+
+.nav-tab {
+
+    border: solid $bs-border-color;
+    padding: 20px;
+    border-width: 1px;
+
+
+
+
+    ul {
+        li {
+            background-color: #fff;
+
+            a {}
+        }
+    }
+}
+
+.tab-content {
+    //width: 100%;
+}
