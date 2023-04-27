@@ -2,7 +2,7 @@ import userInterface from '@/interfaces/userInterface'
 import token from '../../tokenTemporario'
 import { baseApiUrl } from '@/app/global'
 import NavLinks from '../NavLinks'
-import BootstrapUsersReactTable from './BootstrapReactUsersTable'
+import BootstrapUsersReactTable2 from './BootstrapReactUsersTable'
 
 
 export default async function Usuarios(props: { visible: boolean }) {
@@ -20,7 +20,7 @@ export default async function Usuarios(props: { visible: boolean }) {
         <>
             <NavLinks navAtiva='usuario' />
             <div className='tab-content p-3 bg-white user-admin'>
-                <BootstrapUsersReactTable dados={result}></BootstrapUsersReactTable>
+                <BootstrapUsersReactTable2 dados={result}></BootstrapUsersReactTable2>
             </div>
         </>
     )
