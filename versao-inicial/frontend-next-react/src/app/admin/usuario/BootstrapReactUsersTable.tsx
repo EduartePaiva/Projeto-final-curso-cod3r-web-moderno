@@ -15,8 +15,6 @@ interface sortB {
     sortable: boolean,
 }
 
-
-
 function SortButton(props: sortB) {
     if (!props.sortable) {
         return null

@@ -9,15 +9,12 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false; /* eslint-disable import/first */
 import { useState } from 'react'
-import Script from 'next/script'
 
 import Header from './component.Header'
 import Menu from './component.Menu'
 import Footer from './component.Footer'
-
 import userInterface from '@/interfaces/userInterface'
-
-
+import Provireds from './Providers';
 
 
 export const metadata = {
@@ -33,7 +30,8 @@ export default function RootLayout({
     const user: userInterface = {
         name: 'Eduarte Paiva',
         email: 'eduarte@gmail.com',
-        loggedIn: true
+        admin: true,
+        id: 1
     }
 
     //state e função que realiza a ocultação do menu
@@ -56,14 +54,16 @@ export default function RootLayout({
             </head>
 
             <body className={`app ${ocultarMenu ? 'grid-template-sem-menu' : 'grid-template-com-menu'}`}>
-                <Header user={user} setToggle={toggleClicked} iconeMenuAberto={ocultarMenu} title='Cod3r - Base de Conhecimento'></Header>
-                <Menu></Menu>
-                <div className={style.content} >
-                    {/* Carrega a homepage aqui */}
-                    {children}
-                </div>
-                <Footer></Footer>
-                {/* <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossOrigin="anonymous"></Script> */}
+                <Provireds>
+                    <Header user={user} setToggle={toggleClicked} iconeMenuAberto={ocultarMenu} title='Cod3r - Base de Conhecimento'></Header>
+                    <Menu></Menu>
+                    <div className={style.content} >
+                        {/* Carrega a homepage aqui */}
+                        {children}
+                    </div>
+                    <Footer></Footer>
+                </Provireds>
+
             </body>
         </html>
     )

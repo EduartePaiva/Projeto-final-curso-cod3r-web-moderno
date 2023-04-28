@@ -33,7 +33,7 @@ export default function Header(props: props) {
             </h1>
 
             {/* o dropdown do usuário */}
-            {props.user.loggedIn && <UserDropdown {...props.user}></UserDropdown>}
+            {true && <UserDropdown {...props.user}></UserDropdown>}
 
         </header>
     )

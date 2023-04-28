@@ -1,17 +1,17 @@
+'use client'
 import { faFile, faFolder, faUser } from '@fortawesome/free-solid-svg-icons'
 import { baseApiUrl } from "@/app/global";
 import statInterface from "@/interfaces/statInterface";
-
 import Stat from "./component.Stat";
 import token from '../tokenTemporario'
+import { useQuery } from '@tanstack/react-query'
 
 async function getStats(): Promise<statInterface> {
     const myHeaders = new Headers()
     myHeaders.append('Authorization', 'bearer ' + token)
     const stat = await fetch(`${baseApiUrl}/stats`, {
         method: 'GET',
-        headers: myHeaders,
-        next: { revalidate: 60 },
+        headers: myHeaders
     })
 
     const result: statInterface = await stat.json()
@@ -21,9 +21,15 @@ let statDados: statInterface = {
     articles: 0, categories: 0, users: 0
 }
 
-export default async function Home() {
-
-    statDados = await getStats()
+export default function Home() {
+    const statDadosFromQuery = useQuery({
+        queryKey: ['stat'],
+        queryFn: getStats
+    })
+    console.log('teste')
+    if (statDadosFromQuery.data) {
+        statDados = statDadosFromQuery.data
+    }
 
     return (
         <>
