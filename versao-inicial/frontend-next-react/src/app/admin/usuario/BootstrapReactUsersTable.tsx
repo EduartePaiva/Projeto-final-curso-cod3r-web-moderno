@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
 import { MouseEventHandler, useCallback, useState } from 'react'
 import userInterface from '@/interfaces/userInterface'
-import { data } from 'autoprefixer'
 
 interface sortB {
     sortOrder: sortReder,

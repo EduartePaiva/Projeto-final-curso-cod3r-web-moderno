@@ -1,22 +1,11 @@
 'use client'
 import userInterface from '@/interfaces/userInterface'
-import token from '../../tokenTemporario'
-import { baseApiUrl } from '@/app/global'
 import BootstrapUsersReactTable from './BootstrapReactUsersTable'
 import { useQuery, useMutation } from '@tanstack/react-query'
-import { ButtonHTMLAttributes, EventHandler, MouseEvent, MouseEventHandler, useState } from 'react'
+import { MouseEvent, useRef, useState } from 'react'
+import { getUsers } from './usuarioCrud/userCrud'
 
 
-async function getUsuarios(): Promise<userInterface[]> {
-  const url = `${baseApiUrl}/users`
-  const head = new Headers()
-  head.append('Authorization', `bearer ${token}`)
-  const fet = await fetch(url, {
-    headers: head,
-  })
-  const result: userInterface[] = await fet.json()
-  return result
-}
 
 type mode = 'save' | 'remove'
 
@@ -27,9 +16,11 @@ function reset(e: MouseEvent<HTMLButtonElement, MouseEvent>) {
 
 export default function Usuarios(props: { visible: boolean }) {
   const [mode, setMode] = useState<mode>('save')
+
+
   const usuarios = useQuery({
     queryKey: ['users'],
-    queryFn: getUsuarios
+    queryFn: getUsers
   })
 
 

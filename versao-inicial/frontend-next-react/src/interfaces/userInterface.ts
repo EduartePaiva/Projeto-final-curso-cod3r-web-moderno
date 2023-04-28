@@ -1,5 +1,5 @@
 export default interface userInterface {
-    id: number
+    id?: number
     name: string
     email: string
     admin: boolean
