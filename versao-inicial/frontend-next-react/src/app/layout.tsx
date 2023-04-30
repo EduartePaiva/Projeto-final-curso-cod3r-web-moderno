@@ -2,6 +2,8 @@
 
 import '@/styles/globals.css'
 import style from '@/styles/Content.module.css'
+//Importando toastify para notificações
+import 'react-toastify/dist/ReactToastify.css'
 // The following import prevents a Font Awesome icon server-side rendering bug,
 // where the icons flash from a very large icon down to a properly sized one:
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -15,6 +17,7 @@ import Menu from './component.Menu'
 import Footer from './component.Footer'
 import userInterface from '@/interfaces/userInterface'
 import Provireds from './Providers';
+import { ToastContainer } from 'react-toastify'
 
 
 export const metadata = {
@@ -62,8 +65,19 @@ export default function RootLayout({
                         {children}
                     </div>
                     <Footer></Footer>
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                    />
                 </Provireds>
-
             </body>
         </html>
     )

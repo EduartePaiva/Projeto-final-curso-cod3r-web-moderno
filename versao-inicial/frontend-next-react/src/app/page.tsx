@@ -9,7 +9,6 @@ export default function Page() {
 
     return (
         <>
-            {/* @ts-expect-error Async Server Component */}
             < HomePage />
         </>
     )

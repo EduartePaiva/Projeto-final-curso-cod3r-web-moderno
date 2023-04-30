@@ -9,6 +9,7 @@ module.exports = (app) => {
         return bcrypt.hashSync(password, salt)
     }
     const save = async (req, res) => {
+        console.log('Save chamado!!!')
         const user = { ...req.body }
         if (req.params.id) user.id = req.params.id
 
@@ -40,16 +41,16 @@ module.exports = (app) => {
         delete user.confirmPassword
 
         if (user.id) {
-            app.db("users")
+            app.db('users')
                 .update(user)
                 .where({ id: user.id })
                 .whereNull('deletedAt')
-                .then(() => res.status(204).send())
+                .then(_ => res.status(200).send('Usuário Atualizado'))
                 .catch((err) => res.status(500).send(err))
         } else {
             app.db("users")
                 .insert(user)
-                .then(() => res.status(204).send())
+                .then(_ => res.status(204).send())
                 .catch((err) => res.status(500).send(err))
         }
     }
@@ -76,6 +77,9 @@ module.exports = (app) => {
     }
 
     const remove = async (req, res) => {
+        if (req.params.id === req.user.id) {
+            res.status(400).send('Não é possivel excluir a si mesmo')
+        }
         try {
             const articles = await app.db('articles')
                 .where({ userId: req.params.id })

@@ -2,7 +2,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSort, faSortUp, faSortDown, faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { MouseEventHandler, useCallback, useState } from 'react'
-import userInterface from '@/interfaces/userInterface'
+import categoryInterface from '@/interfaces/categoryInterface'
 
 interface sortB {
     sortOrder: sortReder,
@@ -37,44 +37,33 @@ function SortButton(props: sortB) {
     )
 }
 
-function sortData(tableData: userInterface[], sortKey: sortKey, reverse: boolean) {
+function sortData(tableData: categoryInterface[], sortKey: sortKey, reverse: boolean) {
     if (!sortKey) return tableData
     //const data = tableData
 
     tableData.sort((a, b) => {
-        if (sortKey === 'admin') {
-            return a[sortKey] < b[sortKey] ? 1 : -1
-        }
-
-        if (sortKey === 'name' || sortKey === 'email') {
+        if (sortKey === 'name' || sortKey === 'path') {
             return Intl.Collator().compare(a[sortKey], b[sortKey])
         }
         return a[sortKey] > b[sortKey] ? 1 : -1
     })
-
     if (reverse) {
         return tableData.reverse()
     }
-
     return tableData
 }
 
-
-
-type sortKey = keyof userInterface
-
-
-
+type sortKey = keyof categoryInterface
 type sortReder = 'ascn' | 'desc'
 
 
 interface bootstraptableData {
-    dados: userInterface[],
-    loadUser: (mode: 'save' | 'remove' | 'update', user: userInterface) => void
+    dados: categoryInterface[],
+    loadCategory: (mode: 'save' | 'remove' | 'update', category: categoryInterface) => void
 }
 
-export default function BootstrapUsersReactTable(props: bootstraptableData) {
-    const [sortKey, setSortKey] = useState<sortKey>('id')
+export default function BootstrapReactCategoriesTable(props: bootstraptableData) {
+    const [sortKey, setSortKey] = useState<sortKey>('path')
     const [sortOrder, setSortOrder] = useState<sortReder>('ascn')
 
     //use callback só é chamado quando uma das dependência muda
@@ -85,8 +74,7 @@ export default function BootstrapUsersReactTable(props: bootstraptableData) {
     const headers: { key: sortKey, label: string, sortable?: boolean }[] = [
         { key: 'id', label: 'Código', sortable: true },
         { key: 'name', label: 'Nome', sortable: true },
-        { key: 'email', label: 'E-mail', sortable: true },
-        { key: 'admin', label: 'Administrador', sortable: true },
+        { key: 'path', label: 'Caminho', sortable: true },
         { key: 'actions', label: 'Ações' }
     ]
 
@@ -115,23 +103,22 @@ export default function BootstrapUsersReactTable(props: bootstraptableData) {
                 </tr>
             </thead>
             <tbody>
-                {sortedData().map((usuario) =>
-                    <tr key={usuario.id}>
-                        <th scope='row'>{usuario.id}</th>
-                        <td>{usuario.name}</td>
-                        <td>{usuario.email}</td>
-                        <td>{`${usuario.admin ? 'Sim' : 'Não'}`}</td>
+                {sortedData().map((category) =>
+                    <tr key={category.id}>
+                        <th scope='row'>{category.id}</th>
+                        <td>{category.name}</td>
+                        <td>{category.path}</td>
                         <td>
                             <button
                                 type='button'
                                 className='btn btn-warning mr-2'
-                                onClick={() => { props.loadUser('update', usuario) }}>
+                                onClick={() => { props.loadCategory('update', category) }}>
                                 <FontAwesomeIcon icon={faPencil} />
                             </button>
                             <button
                                 type='button'
                                 className='btn btn-danger'
-                                onClick={() => { props.loadUser('remove', usuario) }}>
+                                onClick={() => { props.loadCategory('remove', category) }}>
                                 <FontAwesomeIcon icon={faTrash} />
                             </button>
                         </td>

@@ -23,13 +23,26 @@ const postUser = async (newUser: userPostInterface): Promise<Response> => {
   let url = `${baseApiUrl}/users`
   if (newUser.id) {
     url = `${baseApiUrl}/users/${newUser.id}`
+    //user.id undefined porque o banco não aceita enviar uma propriedade 'id'
+    //newUser.id = undefined
   }
   const fet = await fetch(url, {
-    method: 'POST',
+    method: `${newUser.id ? 'PUT' : 'POST'}`,
     headers: head,
     body: JSON.stringify(newUser)
   })
 
+  return fet
+}
+
+const removeUser = async (userId: number | undefined): Promise<Response> => {
+
+  const url = `${baseApiUrl}/users/${userId}`
+
+  const fet = await fetch(url, {
+    method: 'DELETE',
+    headers: head
+  })
   return fet
 }
 
@@ -39,4 +52,4 @@ const postUser = async (newUser: userPostInterface): Promise<Response> => {
 
 
 
-export { getUsers, postUser }
+export { getUsers, postUser, removeUser }
