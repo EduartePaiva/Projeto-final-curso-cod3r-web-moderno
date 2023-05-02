@@ -29,3 +29,7 @@
     "content content"
     "footer footer";
 }
+
+.containerQuill .ql-editor {
+  min-height: 150px;
+}

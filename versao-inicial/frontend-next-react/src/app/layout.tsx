@@ -12,6 +12,9 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false; /* eslint-disable import/first */
 import { useState } from 'react'
 
+//text editor css
+import 'quill/dist/quill.snow.css'
+
 import Header from './component.Header'
 import Menu from './component.Menu'
 import Footer from './component.Footer'

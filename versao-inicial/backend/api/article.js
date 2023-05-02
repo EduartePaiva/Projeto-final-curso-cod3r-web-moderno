@@ -4,7 +4,15 @@ module.exports = (app) => {
 	const { existsOrError } = app.api.validation
 
 	const save = (req, res) => {
-		const article = { ...req.body }
+		const article = {
+			id: req.body.id,
+			name: req.body.name,
+			userId: req.body.userId,
+			categoryId: req.body.categoryId,
+			description: req.body.description,
+			imageUrl: req.body.imageUrl,
+			content: req.body.content
+		}
 		if (req.params.id) article.id = req.params.id
 
 		try {
@@ -55,7 +63,7 @@ module.exports = (app) => {
 		const count = parseInt(result.count)
 
 		app.db('articles')
-			.select('id', 'name', 'description')
+			.select('id', 'name', 'description', 'userId', 'categoryId')
 			.limit(limit).offset(page * limit - limit)
 			.then(articles => res.json({ data: articles, count, limit }))
 			.catch(err => res.status(500).send(err))

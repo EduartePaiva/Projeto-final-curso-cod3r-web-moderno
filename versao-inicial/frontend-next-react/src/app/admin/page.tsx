@@ -1,5 +1,4 @@
-import Link from "next/link";
-import style from './adminPageTabs.module.scss'
+import style from './adminPageTabs.module.css'
 import NavLinks from "./NavLinks";
 
 export default function AdminPages() {
