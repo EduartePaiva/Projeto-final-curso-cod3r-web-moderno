@@ -3,7 +3,7 @@ import userPostInterface from '@/interfaces/userPostInterface'
 import BootstrapUsersReactTable from './BootstrapReactUsersTable'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { getUsers, postUser, removeUser } from './userCrud'
+import { getUsers, postUser, removeUser } from '../../../cruds/userCrud'
 import { toast } from 'react-toastify'
 import userInterface from '@/interfaces/userInterface'
 

@@ -1,9 +1,8 @@
 'use client'
 
 import Quill from 'quill'
-import { useCallback, useState } from 'react'
+import { Dispatch, SetStateAction, useCallback, useState } from 'react'
 
-const SAVE_INTERVAL_MS = 2000
 const TOOLBAR_OPTIONS = [
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
     [{ font: [] }],
@@ -16,8 +15,10 @@ const TOOLBAR_OPTIONS = [
     ['clean'],
 ]
 
-export default function useTextEditor() {
-    const [quillState, setQuillState] = useState<Quill>()
+interface textEditorProps {
+    setQuillState: Dispatch<SetStateAction<Quill | undefined>>
+}
+export default function TextEditor({ setQuillState }: textEditorProps) {
     const wrapperRef = useCallback((wrapper: HTMLDivElement) => {
         if (wrapper == null) return
 
@@ -26,12 +27,12 @@ export default function useTextEditor() {
         wrapper.append(editor)
         const q = new Quill(editor, { theme: 'snow', modules: { toolbar: TOOLBAR_OPTIONS } })
         setQuillState(q)
-    }, [])
-    return {
-        quillState,
-        renderTextEditor: (
-            <div className='containerQuill' ref={wrapperRef}>
-            </div>
-        )
-    }
+    }, [setQuillState])
+
+
+    return (
+        <div className='containerQuill' ref={wrapperRef}></div>
+    )
+
+
 }

@@ -33,3 +33,21 @@
 .containerQuill .ql-editor {
   min-height: 150px;
 }
+
+
+/* estilos do treeView abaixo */
+
+.MuiTreeItem-root .MuiTreeItem-content {
+  color: #fff;
+  user-select: none;
+}
+
+.MuiTreeItem-root .MuiTreeItem-content:hover {
+  background-color: rgba(255, 255, 255, .2);
+}
+
+.MuiTreeItem-root .Mui-selected {
+  background-color: rgba(255, 255, 255, .2) !important;
+}
+
+/* estilos do treeView acima */

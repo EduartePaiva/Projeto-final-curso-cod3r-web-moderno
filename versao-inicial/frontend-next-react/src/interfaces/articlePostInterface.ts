@@ -4,6 +4,6 @@ export default interface articlePostInterface {
     userId: number | null
     categoryId: number | null
     description: string
-    imageUrl?: string
+    imageUrl: string | null
     content?: string
 }

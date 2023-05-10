@@ -63,7 +63,7 @@ module.exports = (app) => {
 		const count = parseInt(result.count)
 
 		app.db('articles')
-			.select('id', 'name', 'description', 'userId', 'categoryId')
+			.select('id', 'name', 'description', 'userId', 'categoryId', 'imageUrl')
 			.limit(limit).offset(page * limit - limit)
 			.then(articles => res.json({ data: articles, count, limit }))
 			.catch(err => res.status(500).send(err))
@@ -79,7 +79,7 @@ module.exports = (app) => {
 			})
 			.catch(err => res.status(500).send(err))
 	}
-
+	//
 	const getByCategory = async (req, res) => {
 		const categoryId = req.params.id
 		const page = req.query.page || 1

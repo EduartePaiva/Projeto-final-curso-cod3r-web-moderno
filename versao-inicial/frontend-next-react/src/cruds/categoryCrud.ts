@@ -1,7 +1,8 @@
-import { baseApiUrl } from "@/app/global"
-import token from "@/app/tokenTemporario"
+import { baseApiUrl } from "@/cruds/global"
+import token from "@/cruds/tokenTemporario"
 import categoryInterface from "@/interfaces/categoryInterface"
 import categoryPostInterface from "@/interfaces/categoryPostInterface"
+import categoryTreeData from "@/interfaces/categoryTreeData"
 
 const head = new Headers()
 head.append('Authorization', `bearer ${token}`)
@@ -14,6 +15,17 @@ async function getCategories(): Promise<categoryInterface[]> {
         headers: head,
     })
     const result: categoryInterface[] = await fet.json()
+    return result
+}
+
+
+async function getCategoryById(categoryId: string) {
+    const url = `${baseApiUrl}/categories/${categoryId}`
+
+    const fet = await fetch(url, {
+        headers: head
+    })
+    const result: categoryInterface = await fet.json()
     return result
 }
 
@@ -41,5 +53,13 @@ const removeCategory = async (categoryId: number): Promise<Response> => {
     return fet
 }
 
+const getTreeData = async (): Promise<categoryTreeData[]> => {
+    const url = `${baseApiUrl}/categories/tree`
+    const fet = await fetch(url, {
+        headers: head
+    })
 
-export { getCategories, postCategories, removeCategory }
+    return await fet.json() as categoryTreeData[]
+}
+
+export { getCategories, postCategories, removeCategory, getCategoryById, getTreeData }

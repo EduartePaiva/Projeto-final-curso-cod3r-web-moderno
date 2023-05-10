@@ -1,5 +1,5 @@
-import { baseApiUrl } from "@/app/global"
-import token from "@/app/tokenTemporario"
+import { baseApiUrl } from "@/cruds/global"
+import token from "@/cruds/tokenTemporario"
 import userInterface from "@/interfaces/userInterface"
 import userPostInterface from "@/interfaces/userPostInterface"
 

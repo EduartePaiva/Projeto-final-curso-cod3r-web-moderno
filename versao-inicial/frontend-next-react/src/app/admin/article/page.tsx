@@ -2,15 +2,17 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
-import { getArticles, postArticles, removeArticle } from "./articleCrud"
+import { getArticles, getArticlesById, postArticles, removeArticle } from "../../../cruds/articleCrud"
 import CaixaSelectBootstrap from "./CaixaSelectBootstrap"
 import BootstrapReactArticlesTable from "./BootstrapReactArticlesTable"
 import { toast } from "react-toastify"
 import articlePostInterface from "@/interfaces/articlePostInterface"
-import { getCategories } from "../category/categoryCrud"
-import { getUsers } from "../usuario/userCrud"
-import useTextEditor from "@/components/adminComponents/articleComponents/useTextEditor"
+import { getCategories } from "../../../cruds/categoryCrud"
+import { getUsers } from "../../../cruds/userCrud"
 import articleListInterface from "@/interfaces/articleListInterface"
+import DOMPurify from 'dompurify';
+import Quill from "quill"
+import dynamic from "next/dynamic"
 
 type mode = 'save' | 'remove' | 'update'
 
@@ -18,9 +20,9 @@ const voidArticlePost: articlePostInterface = {
   categoryId: null,
   userId: null,
   name: '',
-  description: ''
+  description: '',
+  imageUrl: null
 }
-
 
 function mostrarNotificacao(mensagem: string, codigo?: number) {
   switch (codigo) {
@@ -39,14 +41,22 @@ function mostrarNotificacao(mensagem: string, codigo?: number) {
   }
 }
 
-export default function articlePage() {
-  const { quillState, renderTextEditor } = useTextEditor()
+
+const TextEditor = dynamic(() => import('@/components/adminComponents/articleComponents/TextEditor'), {
+  ssr: false,
+  loading: () => <p>Carregando...</p>
+})
+
+
+export default function Page() {
+  //const { quillState, renderTextEditor } = useTextEditor()
+  const [quillState, setQuillState] = useState<Quill>()
+
   const [mode, setMode] = useState<mode>('save')
   const QueryClient = useQueryClient()
   const [articlePost, setArticlePost] = useState(voidArticlePost)
   const [articlePage, setArticlePage] = useState(1)
 
-  //console.log(articlePost)
 
   const listaDeArtigos = useQuery({
     queryKey: ['articles', { articlePage }],
@@ -97,17 +107,25 @@ export default function articlePage() {
       id: article.id,
       description: article.description,
       categoryId: article.categoryId,
-      userId: article.userId
+      userId: article.userId,
+      imageUrl: article.imageUrl
     })
 
     if (mode === 'remove') {
       setMode('remove')
+
+
       toast.warn(`Excluir ${article.name}?`)
     }
 
     if (mode === 'update') {
       setMode('update')
       toast.warn(`Atualizar ${article.name}?`)
+      getArticlesById(article.id)
+        .then(res => {
+          if (quillState) quillState.root.innerHTML = res.content
+
+        })
     }
 
   }
@@ -155,11 +173,12 @@ export default function articlePage() {
           deleteArticle.mutate(articlePost.id)
         } else {
           //const content = quillState?.root.innerHTML
-          //var enc = new TextEncoder();
-          addOrUpdateArticle.mutate({
-            content: quillState?.root.innerHTML,
-            ...articlePost
-          })
+          if (quillState) {
+            addOrUpdateArticle.mutate({
+              content: DOMPurify.sanitize(quillState.root.innerHTML),
+              ...articlePost
+            })
+          }
         }
         if (quillState) quillState.root.innerHTML = '';
       }}>
@@ -217,7 +236,7 @@ export default function articlePage() {
               id='article-name'
               typeof='url'
               placeholder='Informe a Url da Imagem do Artigo...'
-              value={articlePost.imageUrl}
+              value={articlePost.imageUrl ? articlePost.imageUrl : ''}
               onChange={(e) => {
                 setArticlePost((prevValue) => {
                   return { ...prevValue, imageUrl: e.target.value }
@@ -282,7 +301,7 @@ export default function articlePage() {
           {/* Agora falta o editor de texto */}
           <div className="mb-3">
             <label htmlFor="author-texteditor" className="form-label">Conteúdo:</label>
-            {mode !== 'remove' ? renderTextEditor : null}
+            {mode !== 'remove' ? <TextEditor setQuillState={setQuillState} /> : null}
           </div>
         </div>
 
@@ -311,6 +330,7 @@ export default function articlePage() {
                   onClick={() => setArticlePage((value) => value - 1)}
                   className="page-link">Anterior</button>
               </li>
+
               {renderPageLinks()}
 
               <li className="page-item">

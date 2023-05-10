@@ -8,10 +8,9 @@ import Link from 'next/link'
 
 interface props {
     title: string,
-    hideToggle?: boolean,
     iconeMenuAberto: boolean,
     setToggle: Function,
-    user: userInterface
+    user?: userInterface
 }
 
 export default function Header(props: props) {
@@ -19,7 +18,7 @@ export default function Header(props: props) {
         <header className={style.header}>
 
             {/* Link do toggle do header */}
-            {!props.hideToggle && (
+            {props.user && (
                 <a onClick={() => props.setToggle()} className={style.toggle}>
                     <FontAwesomeIcon icon={props.iconeMenuAberto ? faAngleDown : faAngleLeft} size='lg'></FontAwesomeIcon>
                 </a>
@@ -33,7 +32,7 @@ export default function Header(props: props) {
             </h1>
 
             {/* o dropdown do usuário */}
-            {true && <UserDropdown {...props.user}></UserDropdown>}
+            {props.user && <UserDropdown {...props.user}></UserDropdown>}
 
         </header>
     )

@@ -1,8 +1,8 @@
-import { baseApiUrl } from "@/app/global"
-import token from "@/app/tokenTemporario"
+import { baseApiUrl } from "@/cruds/global"
+import token from "@/cruds/tokenTemporario"
+import articleByCategoryInterface from "@/interfaces/articleByCategoryInterface"
 import articleDataInterface from "@/interfaces/articleDataInterface"
 import articleInterface from "@/interfaces/articleInterface"
-import articleListInterface from "@/interfaces/articleListInterface"
 import articlePostInterface from "@/interfaces/articlePostInterface"
 
 const head = new Headers()
@@ -24,7 +24,22 @@ async function getArticles(page: number): Promise<articleDataInterface> {
     return result
 }
 
-async function getArticlesById(articleId: number): Promise<articleInterface> {
+type getArticleType = {
+    articles: articleByCategoryInterface[],
+    nextPage: number
+}
+
+async function getArticlesByCategory(categoryId: number | string, page: number) {
+    const url = `${baseApiUrl}/categories/${categoryId}/articles?page=${page}`
+
+    const fet = await fetch(url, {
+        headers: head,
+    })
+    const result: articleByCategoryInterface[] = await fet.json()
+    return result
+}
+
+async function getArticlesById(articleId: string | number): Promise<articleInterface> {
     let url = `${baseApiUrl}/articles/${articleId}`
 
     const fet = await fetch(url, {
@@ -51,4 +66,4 @@ const postArticles = async (newArticle: articlePostInterface): Promise<Response>
 }
 
 
-export { removeArticle, postArticles, getArticles }
+export { removeArticle, postArticles, getArticles, getArticlesByCategory, getArticlesById }

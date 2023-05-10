@@ -1,9 +1,9 @@
 'use client'
 import { faFile, faFolder, faUser } from '@fortawesome/free-solid-svg-icons'
-import { baseApiUrl } from "@/app/global";
+import { baseApiUrl } from "@/cruds/global";
 import statInterface from "@/interfaces/statInterface";
 import Stat from "./component.Stat";
-import token from '../tokenTemporario'
+import token from '../../cruds/tokenTemporario'
 import { useQuery } from '@tanstack/react-query'
 
 async function getStats(): Promise<statInterface> {
@@ -26,7 +26,6 @@ export default function Home() {
         queryKey: ['stat'],
         queryFn: getStats
     })
-    console.log('teste')
     if (statDadosFromQuery.data) {
         statDados = statDadosFromQuery.data
     }

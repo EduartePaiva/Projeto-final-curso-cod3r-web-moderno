@@ -4,5 +4,6 @@ export default interface articleListInterface {
     description: string,
     userId: number,
     categoryId: number
-    actions?: any
+    actions?: any,
+    imageUrl: string | null
 }

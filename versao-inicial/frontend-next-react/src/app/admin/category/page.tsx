@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
-import { getCategories, postCategories, removeCategory } from "./categoryCrud"
+import { getCategories, postCategories, removeCategory } from "../../../cruds/categoryCrud"
 import CaixaSelectBootstrap from "./CaixaSelectBootstrap"
 import BootstrapReactCategoriesTable from "./BootstrapReactCategoriesTable"
 import categoryInterface from "@/interfaces/categoryInterface"

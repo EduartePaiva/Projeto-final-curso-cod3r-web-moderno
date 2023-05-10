@@ -6,3 +6,30 @@
     flex-direction: column;
     flex-wrap: wrap;
 }
+
+.menu .menu-filter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #aaa;
+
+}
+
+.menu input {
+    color: #ccc;
+    font-size: 1.3rem;
+    border: 0;
+    outline: 0;
+    width: 100%;
+    background: transparent;
+}
+
+
+/* .menu a,
+.menu a:hover {
+    color: #fff;
+    text-decoration: none;
+} */
