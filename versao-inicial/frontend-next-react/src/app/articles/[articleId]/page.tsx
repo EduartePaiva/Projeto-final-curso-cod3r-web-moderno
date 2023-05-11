@@ -9,6 +9,9 @@ import { useQuery } from "@tanstack/react-query"
 import style from './style.module.css'
 
 import DOMPurify from 'dompurify';
+import { useEffect } from "react"
+import hljs from "highlight.js"
+
 
 function purifiedHtml(html: string) {
     return { __html: DOMPurify.sanitize(html) }
@@ -25,26 +28,27 @@ export default function Page({ params }: articleByIdProps) {
         }
     })
 
-
+    useEffect(() => {
+        document.querySelectorAll('pre').forEach(e => {
+            hljs.highlightBlock(e)
+        })
+    }, [article.isSuccess])
 
 
     return (
-        <div className={style['article-by-id']}>
-            {article.isSuccess &&
-                <>
-                    <PageTitle
-                        icon={faFile}
-                        main={article.data.name}
-                        sub={article.data.description}
-                    />
+        article.isSuccess &&
+        <>
+            <PageTitle
+                icon={faFile}
+                main={article.data.name}
+                sub={article.data.description}
+            />
 
-                    <div
-                        dangerouslySetInnerHTML={purifiedHtml(article.data.content)}
-                        className={style["article-content"]}
-                    />
+            <div
+                dangerouslySetInnerHTML={purifiedHtml(article.data.content)}
+                className={style["article-content"]}
+            />
 
-                </>
-            }
-        </div>
+        </>
     )
 }
