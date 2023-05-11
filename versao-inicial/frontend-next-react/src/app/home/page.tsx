@@ -1,12 +1,21 @@
 'use client'
 import { faFile, faFolder, faUser } from '@fortawesome/free-solid-svg-icons'
-import { baseApiUrl } from "@/cruds/global";
+import { baseApiUrl, userKey } from "@/cruds/global";
 import statInterface from "@/interfaces/statInterface";
 import Stat from "./component.Stat";
-import token from '../../cruds/tokenTemporario'
 import { useQuery } from '@tanstack/react-query'
+import signInInterface from '@/interfaces/signInInterface';
 
 async function getStats(): Promise<statInterface> {
+    let token = ''
+    try {
+        const userInfo = localStorage.getItem(userKey)
+        if (userInfo !== null) {
+            const userJsonInfo: signInInterface = JSON.parse(userInfo)
+            token = userJsonInfo.token
+        }
+    } catch (e) { }
+
     const myHeaders = new Headers()
     myHeaders.append('Authorization', 'bearer ' + token)
     const stat = await fetch(`${baseApiUrl}/stats`, {

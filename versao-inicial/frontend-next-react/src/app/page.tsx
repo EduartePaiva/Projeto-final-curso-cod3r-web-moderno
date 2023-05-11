@@ -1,3 +1,5 @@
+'use client'
+import { useStore } from '@/store'
 import HomePage from './home/page'
 // A primeira página será o componente Content
 
@@ -6,10 +8,9 @@ import HomePage from './home/page'
 
 
 export default function Page() {
+    const userData = useStore()
 
     return (
-        <>
-            < HomePage />
-        </>
+        userData.id ? < HomePage /> : <div>Carregando...</div>
     )
 }

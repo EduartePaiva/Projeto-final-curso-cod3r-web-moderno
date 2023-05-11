@@ -8,6 +8,7 @@ import { ExpandMore, ChevronRight, Search } from '@mui/icons-material'
 import SidebarMuiVersion from '@/components/sidebar/SidebarMuiVersion'
 import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
+import { useStore } from '@/store'
 
 function filtrarCategoria(palavraAfiltrar: string, newTree: categoryTreeData[], expanded: string[]): categoryTreeData[] {
   return newTree.filter((valor) => {
@@ -31,14 +32,15 @@ export default function Menu(props: { ocultarMenu: boolean }) {
   const [treeData, setTreeData] = useState<categoryTreeData[]>()
   const [expanded, setExpanded] = useState<string[]>([])
   const router = useRouter()
+  const userData = useStore()
 
   const currentTreeData = useQuery({
     queryKey: ['treeData'],
     queryFn: getTreeData,
+    enabled: userData.id !== undefined,
     onSuccess: (res) => {
       setTreeData(res)
-    },
-    refetchOnWindowFocus: false
+    }
   })
 
 
@@ -58,7 +60,6 @@ export default function Menu(props: { ocultarMenu: boolean }) {
     const novaTree = filtrarCategoria(palavraAfiltrar, treeClone, lista)
 
     setExpanded(lista)
-    console.log(novaTree)
     setTreeData(novaTree)
   }
 
@@ -101,8 +102,6 @@ export default function Menu(props: { ocultarMenu: boolean }) {
             :
             <p className='text-white text-lg m-2'>Nenhuma categoria encontrada...</p>
           }
-
-
         </>
       }
     </aside>

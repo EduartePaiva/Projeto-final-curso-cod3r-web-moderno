@@ -1,31 +1,40 @@
-import { baseApiUrl, userKey, showError } from "@/cruds/global"
+import { baseApiUrl, userKey } from "@/cruds/global"
+const head = new Headers()
+head.append('Content-type', 'application/json; charset=UTF-8')
+
 
 interface userLoginData {
     email: string,
     password: string
 }
 
-async function signin(userLoginData: userLoginData) {
+async function signinCrud(userLoginData: userLoginData) {
     const url = `${baseApiUrl}/signin`
     const fet = await fetch(url, {
         method: 'POST',
+        headers: head,
         body: JSON.stringify(userLoginData)
     })
 
-    const status = fet.status
-
-    if (status !== 200) {
-        const resposta = await fet.text()
-        showError(resposta, status)
-        return
-    }
-    return fet.json()
-
-
+    return fet
 }
 
-async function signup() {
-
+interface signupUser {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
 }
 
-export default { signin, signup }
+async function signupCrud(userRegisterData: signupUser) {
+    const url = `${baseApiUrl}/signup`
+    const fet = await fetch(url, {
+        method: 'POST',
+        headers: head,
+        body: JSON.stringify(userRegisterData)
+    })
+
+    return fet
+}
+
+export { signinCrud, signupCrud }

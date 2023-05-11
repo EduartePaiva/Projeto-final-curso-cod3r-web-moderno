@@ -114,7 +114,6 @@ export default function Page() {
     if (mode === 'remove') {
       setMode('remove')
 
-
       toast.warn(`Excluir ${article.name}?`)
     }
 

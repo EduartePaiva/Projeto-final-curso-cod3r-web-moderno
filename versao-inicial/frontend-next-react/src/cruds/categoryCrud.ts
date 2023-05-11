@@ -1,8 +1,19 @@
-import { baseApiUrl } from "@/cruds/global"
-import token from "@/cruds/tokenTemporario"
+import { baseApiUrl, userKey } from "@/cruds/global"
 import categoryInterface from "@/interfaces/categoryInterface"
 import categoryPostInterface from "@/interfaces/categoryPostInterface"
 import categoryTreeData from "@/interfaces/categoryTreeData"
+import signInInterface from "@/interfaces/signInInterface"
+
+let token = ''
+try {
+    const userInfo = localStorage.getItem(userKey)
+    if (userInfo !== null) {
+        const userJsonInfo: signInInterface = JSON.parse(userInfo)
+        token = userJsonInfo.token
+    }
+} catch (e) {
+}
+
 
 const head = new Headers()
 head.append('Authorization', `bearer ${token}`)

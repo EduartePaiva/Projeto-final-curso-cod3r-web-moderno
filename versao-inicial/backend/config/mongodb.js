@@ -2,7 +2,6 @@ const mongose = require('mongoose')
 
 const { db_mongo } = require('./../.env')
 
-console.log(db_mongo)
 mongose.connect(db_mongo, { useNewUrlParser: true })
     .catch(e => {
         const msg = 'Não foi possível conectar com o MongoDB'

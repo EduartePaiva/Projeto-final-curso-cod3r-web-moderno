@@ -19,7 +19,6 @@ import 'quill/dist/quill.snow.css'
 import Header from './component.Header'
 import Menu from './component.Menu'
 import Footer from './component.Footer'
-import userInterface from '@/interfaces/userInterface'
 import Provireds from './Providers';
 import { ToastContainer } from 'react-toastify'
 import { userKey } from '@/cruds/global'
@@ -33,53 +32,40 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-    const [user, setUser] = useState<userInterface>()
+    //const [user, setUser] = useState<userInterface>()
     //state e função que realiza a ocultação do menu
     const [ocultarMenu, setOcultarMenu] = useState(true)
     const router = useRouter()
-
+    const userData = useStore()
 
     function toggleClicked() {
         setOcultarMenu(!ocultarMenu)
     }
     //-----------------------------------
 
+
     useEffect(() => {
-        // localStorage.setItem(userKey, JSON.stringify({
-        //     "id": 1,
-        //     "name": "Eduarte Paiva",
-        //     "email": "eduarte.po@yahoo.com.br",
-        //     "admin": true,
-        //     "iat": 1683659348,
-        //     "exp": 1683918548,
-        //     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6IkVkdWFydGUgUGFpdmEiLCJlbWFpbCI6ImVkdWFydGUucG9AeWFob28uY29tLmJyIiwiYWRtaW4iOnRydWUsImlhdCI6MTY4MzY1OTM0OCwiZXhwIjoxNjgzOTE4NTQ4fQ.dFEOSlA2cRxplo_NGkCAxex_KL2IUq5vwb2V61QO1Fo"
-        // }))
-        const userInfo = localStorage.getItem(userKey)
-        if (userInfo === null) { router.push('/auth'); return; }
-        const userJsonInfo: signInInterface = JSON.parse(userInfo)
+        try {
+            const userInfo = localStorage.getItem(userKey)
+            if (userInfo === null || userInfo.length === 0) { router.push('/auth'); return; }
+            const userJsonInfo: signInInterface = JSON.parse(userInfo)
 
-        if (new Date(userJsonInfo.exp * 1000) > new Date()) {
-            setUser({
-                id: userJsonInfo.id,
-                name: userJsonInfo.name,
-                email: userJsonInfo.email,
-                admin: userJsonInfo.admin
-            })
-            useStore.setState({
-                id: userJsonInfo.id,
-                name: userJsonInfo.name,
-                email: userJsonInfo.email,
-                admin: userJsonInfo.admin
-            })
-            setOcultarMenu(true)
-        } else {
-
+            if (new Date(userJsonInfo.exp * 1000) > new Date()) {
+                useStore.setState({
+                    id: userJsonInfo.id,
+                    name: userJsonInfo.name,
+                    email: userJsonInfo.email,
+                    admin: userJsonInfo.admin
+                })
+                setOcultarMenu(false)
+            } else {
+                router.push('/auth')
+            }
+        } catch (e) {
+            router.push('/auth')
         }
 
-
-        console.log(new Date(userJsonInfo.exp * 1000) > new Date())
-
-    }, [])
+    }, [router])
 
 
     return (
@@ -95,8 +81,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
             <body className={`app ${ocultarMenu ? 'grid-template-sem-menu' : 'grid-template-com-menu'}`}>
                 <Provireds>
-                    <Header user={user} setToggle={toggleClicked} iconeMenuAberto={ocultarMenu} title='Cod3r - Base de Conhecimento'></Header>
-                    {user && <Menu ocultarMenu={ocultarMenu} />}
+                    <Header user={userData} setToggle={toggleClicked} iconeMenuAberto={ocultarMenu} title='Cod3r - Base de Conhecimento'></Header>
+                    {userData.id && <Menu ocultarMenu={ocultarMenu} />}
 
                     <div className={style.content} >
                         {/* Carrega a homepage aqui */}

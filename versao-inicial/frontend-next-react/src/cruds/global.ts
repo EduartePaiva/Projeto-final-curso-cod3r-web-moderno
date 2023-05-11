@@ -1,23 +1,20 @@
 import { toast } from "react-toastify"
 
-export const baseApiUrl = 'http://localhost:3000'
-export const userKey = '__knowledge_user'
+const baseApiUrl = 'http://localhost:3000'
+const userKey = '__knowledge_user'
 
 
-
-export function showError(mensagem: string, codigo: number) {
+/** Caso o código seja 200 responde: 'Operação realizada com sucesso'. Senão responderá um erro com a 'mensagem' informada */
+function showMessage(mensagem: string, codigo: number) {
     switch (codigo) {
         case 204:
+            toast.success(mensagem)
+            break;
+        case 200:
             toast.success('Operação realizada com sucesso!!')
             break;
-        case 500:
-            toast.error(`😵 Erro no servidor: ${mensagem}`)
-            break;
-        case 400:
-            toast.warn(`🤔 ${mensagem}`)
-            break;
         default:
-            toast(`${codigo}`)
+            toast.error(mensagem)
             break;
 
     }
@@ -25,4 +22,4 @@ export function showError(mensagem: string, codigo: number) {
 
 
 
-export default { baseApiUrl, userKey, showError }
+export { baseApiUrl, userKey, showMessage }

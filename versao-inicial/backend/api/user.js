@@ -9,7 +9,6 @@ module.exports = (app) => {
         return bcrypt.hashSync(password, salt)
     }
     const save = async (req, res) => {
-        console.log('Save chamado!!!')
         const user = { ...req.body }
         if (req.params.id) user.id = req.params.id
 
@@ -60,7 +59,6 @@ module.exports = (app) => {
             .select("id", "name", "email", "admin")
             .whereNull('deletedAt')
             .then((users) => {
-                console.log('Request: GET (success) users')
                 res.json(users)
             })
             .catch((err) => res.status(500).send(err))

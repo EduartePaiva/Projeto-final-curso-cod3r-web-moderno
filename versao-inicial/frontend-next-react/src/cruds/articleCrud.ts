@@ -1,17 +1,34 @@
-import { baseApiUrl } from "@/cruds/global"
-import token from "@/cruds/tokenTemporario"
+import { baseApiUrl, userKey } from "@/cruds/global"
 import articleByCategoryInterface from "@/interfaces/articleByCategoryInterface"
 import articleDataInterface from "@/interfaces/articleDataInterface"
 import articleInterface from "@/interfaces/articleInterface"
 import articlePostInterface from "@/interfaces/articlePostInterface"
+import signInInterface from "@/interfaces/signInInterface"
+
+let token = ''
+try {
+    const userInfo = localStorage.getItem(userKey)
+    if (userInfo !== null) {
+        const userJsonInfo: signInInterface = JSON.parse(userInfo)
+        token = userJsonInfo.token
+    }
+} catch (e) { }
+
 
 const head = new Headers()
 head.append('Authorization', `bearer ${token}`)
 head.append('Content-type', 'application/json; charset=UTF-8')
 
-async function removeArticle(articleId: number): Promise<Response> {
 
-    return new Response()
+// fazer a remoção de artigos?
+async function removeArticle(articleId: number): Promise<Response> {
+    let url = `${baseApiUrl}/articles/${articleId}`
+
+    const fet = await fetch(url, {
+        method: 'DELETE',
+        headers: head,
+    })
+    return fet
 }
 
 async function getArticles(page: number): Promise<articleDataInterface> {
@@ -22,11 +39,6 @@ async function getArticles(page: number): Promise<articleDataInterface> {
     })
     const result: articleDataInterface = await fet.json()
     return result
-}
-
-type getArticleType = {
-    articles: articleByCategoryInterface[],
-    nextPage: number
 }
 
 async function getArticlesByCategory(categoryId: number | string, page: number) {

@@ -4,8 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown, faCogs, faSignOut } from '@fortawesome/free-solid-svg-icons'
 import userInterface from '@/interfaces/userInterface'
 import Link from 'next/link'
+import { userKey } from '@/cruds/global'
 
-
+function clearLocalStorage() {
+    localStorage.removeItem(userKey)
+}
 
 export default function UserDropdown(props: userInterface) {
     return (
@@ -18,8 +21,8 @@ export default function UserDropdown(props: userInterface) {
                 <FontAwesomeIcon icon={faAngleDown}></FontAwesomeIcon>
             </div>
             <div className={style['user-dropdown-content']}>
-                <Link href={'/admin'}><FontAwesomeIcon icon={faCogs}></FontAwesomeIcon> Administração</Link>
-                <a href=""><FontAwesomeIcon icon={faSignOut}></FontAwesomeIcon> Sair</a>
+                {props.admin && <Link href={'/admin'}><FontAwesomeIcon icon={faCogs}></FontAwesomeIcon> Administração</Link>}
+                <a href="" onClick={clearLocalStorage}><FontAwesomeIcon icon={faSignOut}></FontAwesomeIcon> Sair</a>
             </div>
         </div>
     )

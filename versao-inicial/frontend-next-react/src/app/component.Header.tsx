@@ -10,7 +10,7 @@ interface props {
     title: string,
     iconeMenuAberto: boolean,
     setToggle: Function,
-    user?: userInterface
+    user: userInterface
 }
 
 export default function Header(props: props) {
@@ -18,7 +18,7 @@ export default function Header(props: props) {
         <header className={style.header}>
 
             {/* Link do toggle do header */}
-            {props.user && (
+            {props.user.id && (
                 <a onClick={() => props.setToggle()} className={style.toggle}>
                     <FontAwesomeIcon icon={props.iconeMenuAberto ? faAngleDown : faAngleLeft} size='lg'></FontAwesomeIcon>
                 </a>
@@ -26,13 +26,13 @@ export default function Header(props: props) {
 
             {/* Título, parte central  */}
             <h1 className={style.title}>
-                <Link href={'/home'}>
+                <Link href={props.user.id ? '/home' : '/auth'}>
                     {props.title}
                 </Link>
             </h1>
 
             {/* o dropdown do usuário */}
-            {props.user && <UserDropdown {...props.user}></UserDropdown>}
+            {props.user.id && <UserDropdown {...props.user}></UserDropdown>}
 
         </header>
     )

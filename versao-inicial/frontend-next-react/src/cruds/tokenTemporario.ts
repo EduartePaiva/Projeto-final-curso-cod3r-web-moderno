@@ -1,8 +1,0 @@
-// token casa:
-const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6IkVkdWFydGUgUGFpdmEiLCJlbWFpbCI6ImVkdWFydGUucG9AeWFob28uY29tLmJyIiwiYWRtaW4iOnRydWUsImlhdCI6MTY4MzUwMTE0NSwiZXhwIjoxNjgzNzYwMzQ1fQ.2Yyop8jnbXJbaPkKsNQMDHoIroG33SFV3Mgi4cdR2_w'
-
-//token trabalho: 
-//const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6IkVkdWFydGUiLCJlbWFpbCI6ImVkdWFydGVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTY4MjQzMDkwOSwiZXhwIjoxNjgyNjkwMTA5fQ.NU4vaBHIs-0xhC0-avBmq1tlEpUgJ7saAaSQ5fX2rC8"
-
-
-export default token

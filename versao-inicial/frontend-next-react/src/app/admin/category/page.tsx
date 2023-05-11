@@ -72,8 +72,6 @@ export default function CategoryPage() {
     }
   })
 
-  console.log(categoryPost)
-
   function loadCategories(mode: mode, category: categoryInterface) {
     setCategoryPost({
       name: category.name,

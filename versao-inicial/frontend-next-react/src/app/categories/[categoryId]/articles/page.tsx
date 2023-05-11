@@ -16,7 +16,7 @@ interface articlePageProps {
 }
 
 export default function Page({ params }: articlePageProps) {
-    const [page, setPage] = useState(0)
+    const [page, setPage] = useState(1)
     const [pageEnded, setPageEnded] = useState(false)
     const [pageData, setPageData] = useState<articleByCategoryInterface[]>()
     const [categoryData, setCategoryData] = useState<categoryInterface>()
@@ -24,7 +24,6 @@ export default function Page({ params }: articlePageProps) {
     useEffect(() => {
         getCategoryById(params.categoryId)
             .then(category => setCategoryData(category))
-            .then(() => setPage(1))
     }, [params.categoryId])
 
     useEffect(() => {
@@ -40,13 +39,13 @@ export default function Page({ params }: articlePageProps) {
                             }
                         })
                         // este < 10 é nº de itens que o backend responde. no caso ele envia uma array.length de até 10
-                        if (data.length < 1) setPageEnded(true)
+                        if (data.length < 10) setPageEnded(true)
                     } else {
                         setPageEnded(true)
                     }
                 })
         }
-    }, [page])
+    }, [page, categoryData])
 
 
 
